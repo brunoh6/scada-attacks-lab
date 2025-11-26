@@ -29,7 +29,7 @@ Subnet: **192.168.20.0/24**
 ### Step 1 – Start STEP7 project
 Launch the PLC logic using the file `Second(v.4_1)`.
 
-🖼️ `checking_work.jpg`
+![Checking_Work](screenshots/checking_work.jpg)
 
 ---
 
@@ -179,3 +179,4 @@ Ping between SCADA and PLC.
 **Bruno P. Huaman Vela**  
 Information Security in Telecommunication Systems  
 Ural Federal University – 2025
+
