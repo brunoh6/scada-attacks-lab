@@ -1,93 +1,181 @@
 # SCADA Attacks Lab
 
 ## Overview
-This repository contains the implementation of a lab exercise focused on the exploitation and analysis of vulnerabilities in SCADA (Supervisory Control and Data Acquisition) systems. The simulation involves virtual machines running Windows XP with industrial control software, such as Siemens STEP7 and Wonderware InTouch, emulating a basic industrial automation environment. The attacker machine (Kali Linux) performs scanning, ARP spoofing, DNS spoofing, and packet injection.
+This repository contains the implementation of a SCADA (Supervisory Control and Data Acquisition) security lab focusing on reconnaissance, MITM attacks, packet manipulation, and DoS techniques against a simulated industrial automation environment.
+
+The lab includes:
+- Siemens STEP7 PLC simulation  
+- Wonderware InTouch HMI  
+- NetToPLCSim PLC communication bridge  
+- Kali Linux attacker VM with Ettercap + Wireshark  
+
+The environment replicates a small industrial control network, allowing practical exploration of ICS‑specific threats.
 
 ---
 
 ## Experimental Setup
 
 ### Network Topology
-- **Target1 (SCADA VM)**: Hosts InTouch Runtime and HMI.
-- **Target2 (PLC Simulation)**: Runs Siemens STEP7 and NetToPLCSim to simulate PLC behavior.
-- **Attacker (Kali Linux)**: Used for reconnaissance and attacks.
+- **Target1 – SCADA/HMI (Windows XP)**  
+- **Target2 – PLC Simulation (Windows XP)**  
+- **Attacker – Kali Linux 2024.x**
 
-All machines are on the same subnet (192.168.20.0/24).
+Subnet: **192.168.20.0/24**
 
 ---
 
 ## Experimental Procedure
 
 ### Step 1 – Start STEP7 project
-The lab begins by launching the STEP7 project file `Second(v.4_1)` which contains logic for simulating PLC processes.
+Launch the PLC logic using the file `Second(v.4_1)`.
 
-**🖼️ Screenshot:** `checking_work.jpg`
+🖼️ `checking_work.jpg`
 
 ---
 
 ### Step 2 – Configure NetToPLCSim
-The server is set up using `NetToPLCSim` and bound to IP `192.168.20.160`, acting as a bridge between the SCADA interface and the simulated PLC.
+Bridge PLC simulation to SCADA using IP **192.168.20.160**.
 
-**🖼️ Screenshot:** `nettoplcsim.jpg`
-
----
-
-### Step 3 – Check server connection
-The correct functioning is verified by pinging the configured IP.
-
-**🖼️ Screenshot:** `check_ping.jpg`
+🖼️ `nettoplcsim.jpg`
 
 ---
 
-### Step 4 – View ARP table
-Confirm the devices detected on the network.
+### Step 3 – Verify connectivity  
+Ping the PLC simulation server from SCADA VM.
 
-**🖼️ Screenshot:** `arp_table.jpg`
-
----
-
-### Step 5 – IP configuration of SCADA VM
-SCADA VM is assigned a static IP (e.g., `192.168.20.130`) to ensure consistent communication.
-
-**🖼️ Screenshot:** `ip_address_config.jpg`
+🖼️ `check_ping.jpg`
 
 ---
 
-### Step 6 – Ping test between VMs
-Verify bidirectional connectivity between SCADA and PLC simulation.
+### Step 4 – Check ARP table  
+Confirm active hosts.
 
-**🖼️ Screenshot:** `check_ping.jpg` (already referenced)
-
----
-
-### Step 7 – View parameter status
-Confirm system values (levels, temperatures, valve status, etc.)
-
-**🖼️ Screenshot:** `params_status.jpg`
+🖼️ `arp_table.jpg`
 
 ---
 
-### Step 8 – Launch InTouch HMI
-The InTouch interface is started to display a simulated HMI (Human-Machine Interface).
+### Step 5 – Configure SCADA VM network  
+Assign static IP address.
 
-**🖼️ Screenshot:** `load_intouch.jpg`
-
----
-
-### Step 9 – HMI main window
-Displays the full process simulation: reservoirs, valves, compressor, emergency stop, etc.
-
-**🖼️ Screenshot:** `378FD61D-A390-41F0-ACE2-D7D36A2BB074.png`
+🖼️ `ip_address_config.jpg`
 
 ---
 
-## Next Steps
-- Add ARP spoofing, DNS spoofing, and packet injection documentation
-- Add Ettercap filter setup
-- Add DoS attack execution
-- Include PCAP analysis and potential countermeasures
+### Step 6 – Validate communication  
+Ping between SCADA and PLC.
 
-## Author
-Bruno P. Huaman Vela  
-Student of Information Security in Telecommunication Systems  
-UrFU, 2025
+🖼️ (same as Step 3)
+
+---
+
+### Step 7 – Status of PLC variables  
+🖼️ `params_status.jpg`
+
+---
+
+### Step 8 – Launch Wonderware InTouch  
+🖼️ `load_intouch.jpg`
+
+---
+
+### Step 9 – PLC/HMI runtime window  
+🖼️ `378FD61D-A390-41F0-ACE2-D7D36A2BB074.png`
+
+---
+
+# MITM Attacks (ARP Spoofing, DNS Spoofing, Packet Injection)
+
+### Рисунок 11 – ARP table on SCADA during attack
+🖼️ `970A16F2-DD7C-4145-9BF6-3890BCE188F2.png`
+
+---
+
+### Рисунок 12 – Configure IP on Kali  
+🖼️ `A5C0E087-B954-4D8B-A60B-53084DBA50CE.png`
+
+---
+
+### Рисунок 13 – Connectivity test to both targets  
+🖼️ `DAD6FB4C-18CC-4295-AAC4-7E403D38803C.png`
+
+---
+
+### Рисунок 14 – Start Ettercap and select interface  
+🖼️ `9503C8D8-3D60-44E3-A6C2-04F632896F1C.png`
+
+---
+
+### Рисунок 15 – Host scan  
+🖼️ `5685F8CF-25E8-48BD-8CED-6A5BEE1D74A7.png`
+
+---
+
+### Рисунок 16 – Host list  
+🖼️ `CC05A677-0E00-48E8-B0E5-7D34CE109A66.png`
+
+---
+
+### Рисунок 17 – Add hosts to Target1/Target2  
+🖼️ `397CDDB0-EF8F-4F1D-A2E1-9D3A612835FD.png`  
+🖼️ `95474474-49AE-4A11-8FF7-4CD69C921F00.png`
+
+---
+
+### Рисунок 18 – Protocol setup for packet filtering  
+🖼️ `211CF07C-931D-449D-9881-84FE64B25355.png`
+
+---
+
+### Рисунок 19 – ARP poisoning attack  
+🖼️ `B025A9B9-97E2-444D-BF3B-1ED271494CC3.png`
+
+---
+
+# Packet Capture & Manipulation (Wireshark + Ettercap)
+
+### Рисунок 21 – Capturing packets after MITM begins
+🖼️ `packets_arp_poisoning.jpg`
+
+---
+
+### Рисунок 22 – Enabling Ettercap plugin `dns_spoof`
+🖼️ `pluggin_dns_spoof.jpg`
+
+---
+
+### Рисунок 23 – Loading custom attack script  
+🖼️ `file_script.jpg`
+
+---
+
+### Рисунок 24 – Finding a packet with value `00 55`
+🖼️ `packet_cero_five.jpg`
+
+---
+
+### Рисунок 25 – Filter applied successfully  
+🖼️ `applied_filter.jpg`
+
+---
+
+# DoS Attack & Final Result
+
+### Рисунок 26 – Executing DoS attack  
+🖼️ `dos_attack_sent.jpg`
+
+---
+
+### Рисунок 27 – Packets captured during DoS  
+🖼️ `wireshark_dos_attack.jpg`
+
+---
+
+### Рисунок 28 – DoS attack successful  
+🖼️ `vm_dos_attack_successful.jpg`
+
+---
+
+# Author
+**Bruno P. Huaman Vela**  
+Information Security in Telecommunication Systems  
+Ural Federal University – 2025
